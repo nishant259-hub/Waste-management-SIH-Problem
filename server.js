@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -30,10 +31,9 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
 //database connection
-mongoose.connect('mongodb://127.0.0.1:27017/waste_management')
+mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("MongoDB Connected!"))
-    .catch(err => console.log("MongoDB Error:", err)
-    );
+    .catch(err => console.log("MongoDB Error:", err));
 
 
 // communication blw server and database
@@ -375,7 +375,9 @@ app.get("/logout", (req, res) => {
 });
 
 //app listening port
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
+
+module.exports = app;
