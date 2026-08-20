@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Green - Waste Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <header style="display: flex; justify-content: space-between; align-items: center; text-align: left;">
+            <div>
+                <h1 style="margin-bottom: 5px;">🌿 Go Green</h1>
+                <p>We are taking a step to make our environment clean and green.</p>
+            </div>
+            <a href="/logout" class="btn btn-secondary">Logout</a>
+        </header>
+
+        <% if (locals.batchId) { %>
+            <div class="batch-info" style="background-color: #fff3cd; padding: 15px; border-radius: 8px; border: 1px solid #ffeeba; margin-bottom: 20px; text-align: center;">
+                <h3 style="color: #856404; margin-bottom: 5px;">📦 Active Batch: <%= batchId %></h3>
+                <p style="color: #856404; font-size: 1.1rem; font-weight: bold;">Handshake Code: <%= handShakeCode %></p>
+                <p style="color: #666; font-size: 0.9rem; margin-top: 5px;">Provide this code at the Recycling Hub to verify your shift.</p>
+            </div>
+        <% } %>
+
+        <div class="controls">
+            <div class="select-group">
+                <label for="area">Select Floor / Area</label>
+                <select name="area" id="area" disabled>
+                    <option value="">-- Choose Floor --</option>
+                    <option value="frist_floor" <%=assignedWard==='frist_floor' ? 'selected' : '' %> >1st Floor</option>
+                    <option value="second_floor" <%=assignedWard==='second_floor' ? 'selected' : '' %> >2nd Floor
+                    </option>
+                    <option value="third_floor" <%=assignedWard==='third_floor' ? 'selected' : '' %> >3rd Floor</option>
+                    <option value="fourth_floor" <%=assignedWard==='fourth_floor' ? 'selected' : '' %> >4th Floor
+                    </option>
+                </select>
+
+                <input type="hidden" id="assignedWard" value="<%= assignedWard %>">
+            </div>
+
+            <div class="select-group">
+                <label for="street">Select Street / Ward</label>
+                <select id="street" disabled>
+                    <option value="">-- Choose Street --</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="result">
+            <div class="empty-state">
+                <p>Select a floor and a street to view houses.</p>
+            </div>
+        </div>
+
+        <div class="trip-actions"
+            style="margin-top: 30px; display: flex; gap: 15px; justify-content: center; border-top: 2px solid var(--secondary-color); padding-top: 20px;">
+            <button id="endTrip" class="btn btn-primary" style="flex: 1; padding: 15px; font-size: 1.1rem;">End Shift &
+                Send to Hub</button>
+            <button id="verifyHubBtn" class="btn btn-secondary"
+                style="flex: 1; padding: 15px; font-size: 1.1rem; border: 2px solid var(--primary-color); color: var(--primary-color); font-weight: bold; background: white;">Verify
+                at Hub</button>
+        </div>
+    </div>
+
+
+    <div id="cleaningFormOverlay" class="modal-overlay" style="display: none;">
+        <div id="cleaningForm" class="modal">
+            <h2>Cleaning Verification</h2>
+            <p id="selectedHouse"></p>
+
+            <div class="form-group">
+                <label for="verificationCode">Verification Code:</label>
+                <input type="text" id="verificationCode" placeholder="Enter code (e.g., 123456)">
+            </div>
+
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" id="segregation">
+                    <span class="custom-checkbox"></span>
+                    Garbage is properly segregated
+                </label>
+            </div>
+
+            <div class="modal-actions">
+                <button id="closeForm" class="btn btn-secondary">Close</button>
+                <button id="submitCleaning" class="btn btn-primary">Submit Verification</button>
+                <button id="unavailable" class="btn btn-primary">Mark Unavialbe</button>
+            </div>
+
+            <p id="formMessage"></p>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="index.js"></script>
+
+</body>
+
+</html>

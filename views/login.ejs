@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>House Login - Go Green</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="container" style="max-width: 400px; margin-top: 50px;">
+        <header>
+            <h1>House Login</h1>
+            <p>Enter your assign username and password for your house.</p>
+        </header>
+
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="e.g. frist_floor_ward_1_house_1" required>
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Login</button>
+        </form>
+
+        <% if (locals.error) { %>
+            <p class="msg-error" style="margin-top: 15px; text-align: center;">
+                <%= error %>
+            </p>
+            <% } %>
+    </div>
+</body>
+
+</html>

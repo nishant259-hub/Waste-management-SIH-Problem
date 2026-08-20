@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Green - Smart Waste Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            border-top: 5px solid var(--primary-color);
+        }
+        .hero h1 {
+            color: var(--primary-color);
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .feature-card {
+            background-color: var(--card-bg);
+            padding: 30px 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        .feature-card p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+        .btn-block {
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            padding: 12px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" style="max-width: 1000px; background: transparent; box-shadow: none; padding: 0;">
+        
+        <div class="hero">
+            <h1>🌿 Go Green</h1>
+            <p>Join our mission to keep the environment clean. Smart waste management starts with you—whether you're a resident, a collector, or a recycling hub.</p>
+        </div>
+
+        <div class="features">
+            <!-- House Registration -->
+            <div class="feature-card">
+                <div>
+                    <h3>🏠 For Residents</h3>
+                    <p>Register your house to start tracking your daily waste collection and earn green coins.</p>
+                </div>
+                <a href="#" class="btn btn-secondary btn-block" onclick="alert('House Registration coming soon!')">Register House</a>
+            </div>
+
+            <!-- Login -->
+            <div class="feature-card" style="border: 2px solid var(--primary-color);">
+                <div>
+                    <h3>🔑 Member Login</h3>
+                    <p>Already a registered resident, collector, recycler, or admin? Login to your dashboard.</p>
+                </div>
+                <a href="/login" class="btn btn-primary btn-block">Login Now</a>
+            </div>
+
+            <!-- Recycler Registration -->
+            <div class="feature-card">
+                <div>
+                    <h3>♻️ For Hubs</h3>
+                    <p>Register your recycling bin or hub to receive segregated waste from our collectors.</p>
+                </div>
+                <a href="#" class="btn btn-secondary btn-block" onclick="alert('Hub Registration coming soon!')">Register Hub</a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

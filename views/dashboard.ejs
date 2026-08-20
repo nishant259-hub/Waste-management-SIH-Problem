@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Dashboard - Go Green</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="container" style="max-width: 600px; margin-top: 50px;">
+        <header style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1>Dashboard</h1>
+                <p>Welcome, <%= houseData.house %> (<%= houseData.ward %>, <%= houseData.floor %>)</p>
+            </div>
+            <!-- Logout Button -->
+            <a href="/logout" class="btn btn-secondary">Logout</a>
+        </header>
+
+        <!-- Details Box -->
+        <div class="houses-grid" style="grid-template-columns: 1fr; margin-top: 30px;">
+            <div class="house">
+                <h3>Today's Verification Code</h3>
+                <h1 style="color: var(--primary); font-size: 2.5rem; letter-spacing: 5px; margin: 10px 0;">
+                    <%= houseData.dailyCode %>
+                </h1>
+                <p>Please show this code to the garbage collector.</p>
+            </div>
+
+            <div class="house"
+                style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                <div>
+                    <h3>My Coins</h3>
+                    <h2 style="color: #f59e0b;">
+                        <%= houseData.coins %> 🪙
+                    </h2>
+                </div>
+                <button class="btn btn-primary" onclick="alert('Redeem feature coming soon!')">Redeem Coins</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
