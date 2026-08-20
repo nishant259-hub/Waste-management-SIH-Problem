@@ -34,12 +34,48 @@ app.use(express.urlencoded({ extended: true }));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-mongoose.connect(process.env.MONGO_URI, {
-    serverSelectionTimeoutMS: 5000
-}).then(() => {
-    console.log("MongoDB Connected!");
-}).catch(err => {
-    console.error("MongoDB Connection Error:", err);
+let cachedDb = null;
+
+async function connectToDatabase() {
+    // If already connected or connecting, we don't need to do anything
+    if (mongoose.connection.readyState >= 1) {
+        return;
+    }
+    if (!process.env.MONGO_URI) {
+        throw new Error("MONGO_URI environment variable is missing.");
+    }
+
+    if (cachedDb) {
+        try {
+            await cachedDb;
+            return;
+        } catch (err) {
+            cachedDb = null; // reset if the previous attempt failed
+        }
+    }
+    console.log("Connecting to MongoDB...");
+    cachedDb = mongoose.connect(process.env.MONGO_URI, {
+        serverSelectionTimeoutMS: 5000 
+    });
+    
+    try {
+        await cachedDb;
+        console.log("MongoDB Connected!");
+    } catch (error) {
+        cachedDb = null;
+        throw error;
+    }
+}
+
+// database connection middleware (Required for Vercel Serverless)
+app.use(async (req, res, next) => {
+    try {
+        await connectToDatabase();
+        next();
+    } catch (err) {
+        console.error("MongoDB Error:", err);
+        res.status(500).send("Database Connection Error: " + err.message);
+    }
 });
 
 
