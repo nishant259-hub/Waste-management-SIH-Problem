@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
 const app = express();
 const House = require("./models/house");
 const session = require("express-session");
@@ -9,7 +10,10 @@ const cron = require("node-cron");
 cron.schedule("0 0 * * *", async () => {
     console.log("Raat ke 12 baj gaye! Sab reset ho raha hai...");
     await House.updateMany({}, {
-        $set: { status: "Need cleaning", batchId: null, handShakeCode: null }
+        $set: {
+            status: "Need cleaning", batchId: null, handShakeCode: null,
+            dailyCode: Math.floor(Math.random() + 100000 * 900000).toString()
+        }
     });
     console.log("Reset Done!");
 });
@@ -23,11 +27,11 @@ app.use(session({
 
 
 //middle_ware setup 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 //database connection
