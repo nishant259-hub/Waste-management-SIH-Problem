@@ -68,6 +68,7 @@ async function connectToDatabase() {
 }
 
 // database connection middleware (Required for Vercel Serverless)
+
 app.use(async (req, res, next) => {
     try {
         await connectToDatabase();
