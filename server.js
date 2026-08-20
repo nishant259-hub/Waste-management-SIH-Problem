@@ -37,8 +37,8 @@ app.set("view engine", "ejs");
 let cachedDb = null;
 
 async function connectToDatabase() {
-    // If already connected or connecting, we don't need to do anything
-    if (mongoose.connection.readyState >= 1) {
+    // If already connected, we don't need to do anything
+    if (mongoose.connection.readyState === 1) {
         return;
     }
     if (!process.env.MONGO_URI) {
