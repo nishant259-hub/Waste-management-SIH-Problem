@@ -12,7 +12,7 @@ cron.schedule("0 0 * * *", async () => {
     await House.updateMany({}, {
         $set: {
             status: "Need cleaning", batchId: null, handShakeCode: null,
-            dailyCode: Math.floor(Math.random() + 100000 * 900000).toString()
+            dailyCode: Math.floor(Math.random() * 900000 + 100000).toString()
         }
     });
     console.log("Reset Done!");
@@ -34,10 +34,22 @@ app.use(express.urlencoded({ extended: true }));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-//database connection
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("MongoDB Connected!"))
-    .catch(err => console.log("MongoDB Error:", err));
+// database connection middleware (Best for Vercel Serverless)
+app.use(async (req, res, next) => {
+    try {
+        if (!process.env.MONGO_URI) {
+            throw new Error("MONGO_URI is undefined! Check Vercel Environment Variables.");
+        }
+        if (mongoose.connection.readyState !== 1) {
+            await mongoose.connect(process.env.MONGO_URI);
+            console.log("MongoDB Connected!");
+        }
+        next();
+    } catch (err) {
+        console.error("MongoDB Error:", err);
+        res.status(500).send("Database Connection Error: " + err.message);
+    }
+});
 
 
 // communication blw server and database
