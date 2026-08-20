@@ -40,9 +40,22 @@ app.use(async (req, res, next) => {
         if (!process.env.MONGO_URI) {
             throw new Error("MONGO_URI is undefined! Check Vercel Environment Variables.");
         }
-        if (mongoose.connection.readyState !== 1) {
-            await mongoose.connect(process.env.MONGO_URI);
+        if (mongoose.connection.readyState === 0) {
+            await mongoose.connect(process.env.MONGO_URI, {
+                serverSelectionTimeoutMS: 5000 // Timeout in 5s if IP is blocked
+            });
             console.log("MongoDB Connected!");
+        }
+        // Wait if currently connecting
+        if (mongoose.connection.readyState === 2) {
+            await new Promise(resolve => {
+                const interval = setInterval(() => {
+                    if (mongoose.connection.readyState === 1) {
+                        clearInterval(interval);
+                        resolve();
+                    }
+                }, 100);
+            });
         }
         next();
     } catch (err) {
